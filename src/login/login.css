@@ -1,0 +1,115 @@
+.login__container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  width: 100%;
+}
+
+.login__content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  padding: 2rem 2rem;
+  max-width: 350px;
+  position: relative;
+}
+
+.btn__login-close {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  outline: none;
+  padding: 0.4rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.form__error {
+  color: var(--color-danger);
+  font-size: 0.6rem;
+}
+
+.form__content-descrip {
+  margin-bottom: 4rem;
+}
+
+.form__content-descrip > small {
+  color: var(--color-danger);
+  display: block;
+  font-weight: bold;
+  text-align: center;
+}
+
+.form__title {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.form__title span {
+  color: crimson;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.form-control > label {
+  margin-bottom: 0.4rem;
+}
+
+.form-control > input {
+  margin-bottom: 0.5rem;
+}
+
+.form__btn-content {
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.form__btn-content > small {
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: block;
+  font-size: 0.7rem;
+}
+
+.btn__log {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  width: 100%;
+  padding: 10px 0;
+}
+
+@media screen and (min-width: 992px) {
+  .btn__log {
+    padding: 8px 0;
+    font-size: 0.9rem;
+  }
+
+  .form__btn-content > small {
+    font-size: 0.8rem;
+  }
+}
+
+.btn__log svg {
+  margin-left: 5px;
+}
+
+.form__cuenta {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.form__cuenta > a {
+  color: var(--color-texto);
+  font-weight: bold;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.form__cuenta > a > span {
+  color: var(--color-danger);
+}

@@ -1,0 +1,114 @@
+.nav__container {
+  background-color: var(--bg-card-color);
+  height: 70px;
+  width: 100%;
+}
+
+.nav__content {
+  align-items: center;
+  display: flex;
+  height: inherit;
+  justify-content: space-between;
+  padding: 0 10px;
+  width: 100%;
+}
+
+.nav__logo-img {
+  height: 50px;
+}
+
+@media screen and (min-width: 48rem) {
+  .nav__logo-img {
+    height: 40px;
+  }
+}
+
+/* Estilos Usuario Setting */
+.nav__setting {
+  position: relative;
+}
+
+.nav__setting-user {
+  align-items: center;
+}
+
+.nav__setting-user p {
+  color: var(--color-primary);
+  margin-right: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.nav__setting-user span {
+  font-weight: 300;
+  color: var(--color-texto);
+}
+
+.nav__setting-btn {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 1.5rem;
+  outline: none;
+  padding: 0;
+}
+
+.nav__setting-list {
+  background-color: var(--color-primary);
+  border-radius: 10px 0 10px 5px;
+  position: absolute;
+  top: 50px;
+  right: 5px;
+  padding: 0 0.5rem;
+  transform: translateX(200%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.none__btn-setting {
+  transform: translateX(0%);
+}
+
+.nav__setting-list li {
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.nav__item {
+  color: var(--color-gris);
+}
+
+.nav__item span {
+  margin-right: 5px;
+}
+
+.nav__item p {
+  letter-spacing: 0.5px;
+}
+
+@media screen and (min-width: 48rem) {
+  .nav__logo-img {
+    height: 40px;
+  }
+
+  .nav__setting-user p {
+    font-size: 1rem;
+  }
+
+  .nav__setting-user span {
+    font-size: 0.9rem;
+  }
+
+  .nav__setting-btn {
+    font-size: 1.3rem;
+  }
+
+  .nav__item p {
+    letter-spacing: 0.5px;
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (min-width: 62rem) {
+}
+@media screen and (min-width: 64rem) {
+}

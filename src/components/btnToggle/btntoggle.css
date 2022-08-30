@@ -1,0 +1,53 @@
+.toggle {
+  align-items: center;
+  background-color: crimson;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  width: 40px;
+}
+
+.toggle span {
+  background-color: #fff;
+  border-radius: 4px;
+  height: 4px;
+  position: absolute;
+  width: 27px;
+  left: 7px;
+  transition: transform 0.5s ease, width 0.5s ease;
+}
+
+.toggle span:nth-child(1) {
+  transform: translateY(-10px);
+  width: 20px;
+  left: 7px;
+}
+
+.toggle span:nth-child(2) {
+  transform: translateY(10px);
+  width: 15px;
+  left: 7px;
+}
+
+/*=== Estilo para cunado se hace toggle ===*/
+
+.toggle.active span:nth-child(1) {
+  transform: translateY(0px) rotate(45deg);
+  width: 30px;
+  left: 5px;
+}
+
+.toggle.active span:nth-child(2) {
+  transform: translateY(0px) rotate(315deg);
+  width: 30px;
+  left: 5px;
+}
+
+.toggle.active span:nth-child(3) {
+  transform: translateX(60px);
+}

@@ -1,0 +1,33 @@
+.modal__container {
+  align-items: center;
+  background-color: rgba(30, 30, 30, 0.7);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+.modal__content {
+  background-color: var(--bg-card-color);
+  border-radius: var(--border);
+  min-width: 350px;
+  padding: 0.7rem 0.5rem;
+}
+
+/*=== Inicio de: Close Modal ===*/
+.modal-close {
+  pointer-events: none;
+  opacity: 0;
+  transition: pointer-events 0.3s ease-out, opacity 0.3s ease-out;
+}
+.modal-open {
+  pointer-events: visible;
+  opacity: 1;
+  transition: pointer-events 0.3s ease-in, opacity 0.3s ease-in;
+}
+/*=== Fin de: Close Modal ===*/
