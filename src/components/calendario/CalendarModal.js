@@ -1,25 +1,47 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal } from '../modal/Modal'
 import DateTimePicker from 'react-datetime-picker'
+import { ToastContainer } from 'react-toastify'
 
 import './styles/calendarioModal.css'
 import moment from 'moment'
+import { alertaError } from '../../helpers/alertasMessages'
+import { useDispatch, useSelector } from 'react-redux'
+import { isCloseModal } from '../../features/modal/modalSlice'
+import {
+  eventAddNew,
+  eventClearActiveEvent,
+  eventUpdate,
+} from '../../features/calendar/calendarSlice'
 
 const now = moment().minutes(0).seconds(0).add(1, 'hours')
 const nouPlus1 = now.clone().add(1, 'hours')
 
-export const CalendarModal = ({ isOpenModal, closeModal }) => {
+const initialEvent = {
+  title: '',
+  notes: '',
+  start: now.toDate(),
+  end: nouPlus1.toDate(),
+}
+
+export const CalendarModal = ({ isOpenModal }) => {
+  const dispatch = useDispatch()
+  const { activeEvent } = useSelector((state) => state.calendar)
+
   const [dateStart, setDateStart] = useState(now.toDate())
   const [dateEnd, setDateEnd] = useState(nouPlus1.toDate())
 
-  const [formValues, setFormValues] = useState({
-    title: 'Evento',
-    notes: '',
-    start: now.toDate(),
-    end: nouPlus1.toDate(),
-  })
+  const [formValues, setFormValues] = useState(initialEvent)
 
   const { title, notes, start, end } = formValues
+
+  useEffect(() => {
+    if (activeEvent) {
+      setFormValues(activeEvent)
+    } else {
+      setFormValues(initialEvent)
+    }
+  }, [activeEvent, setFormValues])
 
   const handleInputChange = (e) => {
     setFormValues({
@@ -44,14 +66,15 @@ export const CalendarModal = ({ isOpenModal, closeModal }) => {
     })
   }
 
-  // Mensaje de Alerta toast
-  /* const errorToastModal = () => {
-    toast('Error, fecha 2 debe ser mayor ', {
-      className: 'custom-toast',
-      draggable: true,
-      position: toast.POSITION.TOP_RIGHT,
-    })
-  } */
+  // Cerrando Modal
+  const closeModal = () => {
+    // Cerrando Modal
+    dispatch(isCloseModal())
+    // Restaurando el evento seleccionado
+    dispatch(eventClearActiveEvent())
+    // Reset Modal
+    setFormValues(initialEvent)
+  }
 
   // Envio de formulario
   const handleSubmitForm = (e) => {
@@ -60,16 +83,38 @@ export const CalendarModal = ({ isOpenModal, closeModal }) => {
     const momentStart = moment(start)
     const momentEnd = moment(end)
 
-    if (momentStart.isSameOrAfter(momentEnd)) {
-      console.log('fecha 2 debe ser mayor')
-      return null
+    // verificacion fecha fin sea mayor que fecha inicio
+    if (momentStart.isSameOrAfter(momentEnd))
+      return alertaError('La fecha fin debe ser mayor que la fecha inicio!!!')
+
+    // verificacion que title no sea null ni menos de 2 caracteres
+    if (title.trim().length < 2)
+      return alertaError('Revise el campo titulo, minimo 2 caracteres')
+
+    if (activeEvent) {
+      dispatch(eventUpdate(formValues))
+    } else {
+      // Enviando Formulario a Dispatch
+      dispatch(
+        eventAddNew({
+          ...formValues,
+          id: new Date().getTime(),
+          user: {
+            _id: '123',
+            name: 'Miguel',
+          },
+        })
+      )
     }
+
+    // Cerrando Modal
+    closeModal()
   }
 
   return (
-    <Modal isOpenModal={isOpenModal} closeModal={closeModal}>
-      <h1> Nuevo evento </h1>
-
+    <Modal closeModal={closeModal}>
+      <h1> {activeEvent ? 'Editar Evento' : 'Nuevo Evento'} </h1>
+      <ToastContainer />
       <hr />
       <form onSubmit={handleSubmitForm}>
         <div className="form-control">
@@ -112,7 +157,7 @@ export const CalendarModal = ({ isOpenModal, closeModal }) => {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          <span> Guardar</span>
+          <span>Guardar</span>
         </button>
       </form>
     </Modal>

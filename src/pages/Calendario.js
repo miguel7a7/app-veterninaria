@@ -2,34 +2,29 @@ import React, { useState } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import { messages } from '../helpers/calendario-mensajes'
 import moment from 'moment'
+import { CalendarEvents } from '../components/calendario/CalendarEvents'
+import { CalendarModal } from '../components/calendario/CalendarModal'
+import { useDispatch, useSelector } from 'react-redux'
+import { isOpenModal } from '../features/modal/modalSlice'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'moment/locale/es'
 import './styles/calendario.css'
-import { CalendarEvents } from '../components/calendario/CalendarEvents'
-import { CalendarModal } from '../components/calendario/CalendarModal'
-import { useModal } from '../hooks/useModal'
+import {
+  eventClearActiveEvent,
+  eventSetActive,
+} from '../features/calendar/calendarSlice'
+import { AddNewFab } from '../ui/AddNewFab'
+import { DeleteBtnFab } from '../ui/DeleteBtnFab'
 
 moment.locale('es')
 
 const localizer = momentLocalizer(moment)
 
-const events = [
-  {
-    title: 'Cumpleaños de jefe',
-    start: moment().toDate(),
-    end: moment().add(2, 'hours').toDate(),
-    bgcolor: 'teal',
-    notes: 'A no rendirse',
-    user: {
-      _id: 123,
-      name: 'Miguel Angel',
-    },
-  },
-]
-
 export const Calendario = () => {
-  const [isOpenModal, openModal, closeModal] = useModal(false)
+  const dispatch = useDispatch()
+  // Leendo los eventos agragados
+  const { events, activeEvent } = useSelector((state) => state.calendar)
   // Localstorage guardado de la vista
   const [lastView, setLastView] = useState(
     localStorage.getItem('lastView') || 'month'
@@ -51,19 +46,23 @@ export const Calendario = () => {
 
   // funcion para abrir modal
   const onDoubleClick = (e) => {
-    // console.log(e)
-    openModal()
+    dispatch(isOpenModal())
   }
 
   // funcion para seleccionar evento
   const onSelecEvent = (e) => {
-    // console.log(e)
+    dispatch(eventSetActive(e))
   }
 
   // funcion para saber si estamos en semana o mes
   const onViewChange = (e) => {
     setLastView(e)
     localStorage.setItem('lastView', e)
+  }
+
+  // funcion para cunado se hace click sin abrir el modal
+  const onSelectSlot = (e) => {
+    dispatch(eventClearActiveEvent())
   }
 
   return (
@@ -79,13 +78,20 @@ export const Calendario = () => {
           onDoubleClickEvent={onDoubleClick}
           onSelectEvent={onSelecEvent}
           onView={onViewChange}
+          onSelectSlot={onSelectSlot}
+          selectable={true}
           view={lastView}
           components={{
             event: CalendarEvents,
           }}
         />
       </div>
-      <CalendarModal isOpenModal={isOpenModal} closeModal={closeModal} />
+
+      <AddNewFab />
+
+      {activeEvent && <DeleteBtnFab />}
+
+      <CalendarModal />
     </div>
   )
 }

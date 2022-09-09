@@ -1,4 +1,4 @@
-import { useState } from 'react'
+/* import { useState } from 'react'
 
 export const useModal = (initialState = false) => {
   const [isOpenModal, setIsOpenModal] = useState(initialState)
@@ -12,3 +12,4 @@ export const useModal = (initialState = false) => {
 
   return [isOpenModal, openModal, closeModal]
 }
+ */

@@ -8,6 +8,6 @@ Proyecto Veterninaria [Veterninaria Huellitas](https://github.com/facebook/creat
 2. npm i moment
 3. npm i react-datetime-picker
 
-In the project directory, you can run:
+4. npm install @reduxjs/toolkit
 
 ### `npm start`
